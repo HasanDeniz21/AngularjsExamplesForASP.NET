@@ -1,0 +1,736 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+<script src="~/Scripts/pages/app.js"></script>
+
+<script>
+    var myApp = angular.module("myApp", ['ngAnimate', 'ui.bootstrap']);
+
+    myApp.controller("myController", myController);
+
+    myController.$inject = ['$scope', '$http', '$sce', '$rootScope', '$compile'];
+
+    function myController($scope, $http, $sce, $rootScope, $compile) {
+
+        //    //-------Get-------
+        //    //$http.get("https://jsonplaceholder.typicode.com/posts", $scope.information).then(function (response) {
+        //    //    $scope.data = response.data;
+        //    //});
+
+        //    //*****************List*********************************************
+        //    //$scope.users = [
+        //    //    { id:1 ,"name": "Hasan", "age": "28" },
+        //    //    { id:2 ,"name": "Murat", "age": "33" },
+        //    //    { id:3 ,"name": "Mahmut", "age": "19" },
+        //    //    { id:4 ,"name": "Barış", "age": "22" },
+        //    //    { id:5 ,"name": "Sevgi", "age": "45" },
+        //    //    { id:6 ,"name": "Ahmet", "age": "54" },
+        //    //];
+
+        //    //$scope.deger1 = 0;
+        //    //$scope.deger = 0;
+
+
+        //    //************Index***************************************************
+        //    //$scope.tools = ["Araba", "Kamyon", "Tren", "Uçak", "Gemi"];
+        //    //$scope.deleteTool = function (value) {
+
+        //    //    alert("Silmek istediğinzden Emin misiniz ?");
+        //    //    $scope.tools.splice(value, value + 1);
+
+        //    //}
+
+        //    //***********Image Src ,$sce******************************************
+        //    //$scope.data = "";
+        //    //$scope.getHtmlTag = function () {
+
+        //    //    $scope.imageUrl = "https://cdn.okul.com.tr/galleries/3/1/630x420/16-year-old-artist-dimitra-milan-1.jpg";
+        //    //    $scope.data = $sce.trustAsHtml("<h1>This image created By Angular</h1>");
+
+        //    //};
+
+
+        //    // ************ Create Dynamic form**********************************
+        //    //$scope.addNewDiv = function () {
+
+        //    //    angular.element(document.getElementById('deneme')).append('<div id="createdDiv"><label>Name:<input type="text"/></label><label> Surname:<input type="text" /></label ><label> Age:<input type="text"/></label><button class="btn btn-success" ng-click="addNewDiv()"> Ekle </button> <button ng-show="count > 0" class="btn btn-danger" ng-click="deleteDiv()"> Sil </button></div>');
+        //    //};
+
+        //    //$scope.deleteDiv = function () {
+        //    //    angular.element(createdDiv).remove(createdDiv);
+        //    //};
+
+        //    //********ng-include************************************************
+        //    //$scope.page = "page1.html";
+
+
+        //    //******** watch *****************************************************
+        //    //girilen değeri takip eder
+        //    //$scope.value = 0;
+        //    //$scope.warning = "";
+
+        //    //$scope.$watch("value", function () {
+        //    //    if ($scope.value == 10) {
+        //    //        $scope.warning = "Be carefull you much increase value";
+        //    //        $scope.value = 9;
+        //    //    }
+        //    //});
+
+        //    // **********Filter****************************************************
+        //    //$scope.value = 0;
+        //    //$scope.personal = [
+        //    //    { id: 1, "name": "Hasan", "age": "28", "salary": 200 },
+        //    //    { id: 2, "name": "Murat", "age": "33", "salary": 300 },
+        //    //    { id: 3, "name": "Mahmut", "age": "19", "salary": 150 },
+        //    //    { id: 4, "name": "Barış", "age": "22", "salary": 350 },
+        //    //    { id: 5, "name": "Sevgi", "age": "45", "salary": 500 },
+        //    //    { id: 6, "name": "Ahmet", "age": "54", "salary": 450 },
+        //    //];
+
+        //    //$scope.employees = [];
+
+        //    //$scope.filterData = function (value) {
+        //    //    $scope.employees = $scope.personal.filter(function (data) {
+
+        //    //        switch ($scope.value) {
+        //    //            case 1: $scope.value = 1
+        //    //                return data.salary < 200;
+        //    //            case 2: $scope.value = 2
+        //    //                return data.salary < 250;
+        //    //            case 3: $scope.value = 3
+        //    //                return data.salary < 300;
+        //    //            case 4: $scope.value = 4
+        //    //                return data.salary < 350;
+        //    //            case 5: $scope.value = 5
+        //    //                return data.salary < 400;
+        //    //            case 6: $scope.value = 6
+        //    //                return data.salary > 450;
+        //    //            default:
+        //    //                break;
+        //    //        }
+
+        //    //    });
+        //    //};
+
+        //    //****Filtre ın devamı *************************************************
+        //    //$scope.items = [];
+        //    //$scope.employees = [
+        //    //    { id: 1, "name": "Hasan", "age": "28", "salary": 200, "status": false },
+        //    //    { id: 2, "name": "Murat", "age": "33", "salary": 300, "status": false },
+        //    //    { id: 3, "name": "Mahmut","age": "19", "salary": 150, "status": false },
+        //    //    { id: 4, "name": "Barış", "age": "22", "salary": 350, "status": false },
+        //    //    { id: 5, "name": "Sevgi", "age": "45", "salary": 500, "status": false },
+        //    //    { id: 6, "name": "Ahmet", "age": "54", "salary": 450, "status": false },
+        //    //];
+
+        //    //$scope.selectAll = function () {
+
+        //    //    $scope.totalData = $scope.employees.length;
+        //    //    for (i = 0; i < $scope.totalData; i++) {
+        //    //        $scope.employees[i].status = true;
+        //    //    }
+        //    //};
+
+        //    //$scope.unSelectAll = function () {
+        //    //    $scope.totalData = $scope.employees.length;
+
+        //    //    for (i = 0; i < $scope.totalData; i++) {
+        //    //        $scope.employees[i].status = false;
+        //    //    }
+        //    //};
+
+        //    //$scope.changeState = function () {
+        //    //    $scope.items = $scope.employees.filter(function (i) {
+        //    //        return i.status == true;
+        //    //    });
+
+        //    //    $scope.employees = $scope.employees.filter(function (i) {
+        //    //        return i.status == false;
+        //    //    });
+
+        //    //};
+
+        //    //************ng-submit*****************************************
+
+        //    //$scope.sendMessage = function () {
+        //    //    $scope.data = { "rakam": $scope.nnumara, "mail": $scope.mail };
+        //    //    $http.post("htpp://denemeServis/", $scope.data).then(function (response) {
+        //    //        $scope.cevap = response.data;
+        //    //        alert("Mesajınız Gönderildi");
+        //    //    });
+        //    //};
+
+        //    //**********ng-disabled****************************************
+        //    //$scope.btn == true;
+
+        //    //$scope.addText = function (value) {
+        //    //    alert(value);
+        //    //};
+
+        //    //**********ng-hide********************************************
+
+        //    //$scope.value = true;
+
+        //    //$scope.hideOrShow = function () {
+        //    //    $scope.value = !$scope.value;
+        //    //};
+
+
+        //    //********ng-keyup ,Animation************************************
+        //    //$scope.items = ["Hasan", "Mahmut", "Barış", "Murat", "Cemal"];
+        //    //$scope.action = function () {
+        //    //    $scope.items.push($scope.box);
+        //    //    $scope.box = "";
+        //    //}
+
+        //    //$scope.delete = function (a) {
+        //    //    $scope.items.splice(a,1);
+        //    //}
+
+
+        //    //*****************ng-option*******************
+        //    //$scope.iller = ["İstanbul", "Ankara", "Antalya", "Adana", "İzmir", "Mersin"];
+        //    //$scope.iller.unshift('Bir il seçiniz');
+        //    //$scope.control = $scope.iller[0];
+
+        //    //$scope.action = function (a) {
+        //    //    //alert(a);
+        //    //}
+
+        //    //**************$rootScope******************
+        //    //$rootScope.value="Bu değer controller 1 in içeriğidir."
+
+
+        //    //************** $digest ***************
+        //    //document.getElementById("btn").addEventListener("click", function () {
+
+        //    //    $scope.value = Math.random();
+
+        //    //    console.log($scope.value);
+        //    //    $scope.$digest();
+
+        //    //});
+
+
+        //    // ********** $compile ****************
+        //    //angular.element(myDiv).append($compile('<input type="text" placeholder="Veri Giriniz" ng-model="esya"/>')($scope));
+        //    //angular.element(myDiv).append($compile('<button ng-click="eylem(esya)">Tıkla</button>')($scope));
+
+        //    //$scope.eylem = function (a) {
+        //    //    alert(a);
+        //    //}
+
+
+        //*************** EMPLOYEE FORM ***********
+
+        //$scope.liste = [];
+        //$scope.value = "";
+        //$scope.count = 0;
+        //$scope.employee = { id: 0, name: '', surname: '', email: '' };
+
+        //$scope.employees = [
+        //    { "id": 1, "name": "Hasan", "surname": "Mirzaoğlu", "email": "hasan@gmail.com" },
+        //    { "id": 2, "name": "Leyla", "surname": "Cakıcı", "email": "leyla@gmail.com" }];
+
+        //$scope.count = $scope.employee.length;
+
+        //$scope.employeeList = function () {
+        //    $scope.liste = $scope.employees.list();
+        //}
+
+        //$scope.addNewFriend = function () {
+        //    $("#employeePopup").modal("show");
+        //    $scope.clearText();
+        //};
+
+        //$scope.addNew = function () {
+        //    if ($scope.employee.id == 0) {
+        //        $scope.employee.id = $scope.count++;
+        //        $scope.employees.push($scope.employee);
+        //        $("#employeePopup").modal("hide");
+        //        $scope.clearText();
+        //    }
+        //    else {
+        //        $scope.update($scope.employee);
+        //    }
+
+        //};
+
+        //$scope.update = function (employee) {
+        //    $scope.employees[$scope.value] = employee;
+        //    $("#employeePopup").modal("hide");
+        //    $scope.clearText();
+        //};
+
+        //$scope.selectRow = function (a) {
+        //    $("#employeePopup").modal("show");
+        //    $scope.employee = $scope.employees[a];
+        //    $scope.value = a;
+        //};
+
+        //$scope.deleteRow = function (x) {
+        //    $scope.employees.splice(x, 1);
+        //};
+
+        //$scope.cancelForm = function () {
+        //    $("#employeePopup").modal("hide");
+        //    $scope.clearText();
+        //};
+
+        //$scope.clearText = function () {
+        //    $scope.e_name = "";
+        //    $scope.e_surname = "";
+        //    $scope.e_email = "";
+        //};
+
+
+        // ***********Custom()****************
+
+             //$scope.employees = [
+             //{ "id": 1, "name": "Hasan", "surname": "Mirzaoğlu", "email": "hasan@gmail.com","cinsiyet":"E"},
+             //{ "id": 2, "name": "Leyla", "surname": "Cakıcı", "email": "leyla@gmail.com"   ,"cinsiyet":"K"},
+             //{ "id": 2, "name": "Mahmut", "surname": "Yıldız", "email": "mahmut@gmail.com" ,"cinsiyet":"E"},
+             //{ "id": 2, "name": "Barış", "surname": "Kurt", "email": "baris@gmail.com"     ,"cinsiyet":"E"},
+             //{ "id": 2, "name": "Fırat", "surname": "Tanrıkulu", "email": "firat@gmail.com","cinsiyet":"E"}
+             //];
+
+
+    };
+</script>
+
+@* // ***********Custom()**************** *@
+
+<div>
+    <br />
+    <input type="text" ng-model="search"  placeholder="search"/>
+    
+    <input type="checkbox"  ng-true-value="'erkek'" ng-false-value="" ng-model="select1"/>erkek
+    <input type="checkbox"  ng-true-value="'kadın'" ng-false-value="" ng-model="select2"/>kadın
+    <br /> 
+<fieldset>
+    <legend>Kişi Listesi</legend>
+        <ul>
+            <li ng-repeat="person in employees | filter: {name:search} | filter:toFilter">
+            <o>{{person.name}} {{person.surname}}</o></li>
+        </ul>
+</fieldset>
+
+</div>
+
+
+@********* EMPLOYEE FORM **  *@
+<div>
+    @*<div class="container col-md-12">
+        <div class="panel">
+            <h2>To do List</h2>
+            <p>Angularjs ile kişi listeleme </p>
+        </div>
+        <table class="table table-hover" style="width:800px;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" class="form-control" ng-model="e_name" ng-required="true" /></td>
+                    <td><input type="text" class="form-control" ng-model="e_surname" ng-required="true" /></td>
+                    <td><input type="text" class="form-control" ng-model="e_email" ng-required="true" /></td>
+                    <td><button class="btn btn-primary" ng-click="addNewFriend()" />Add New</td>
+                </tr>
+                <tr ng-repeat="emplo in employees track by $index">
+                    <td>{{emplo.name}}</td>
+                    <td>{{emplo.surname}}</td>
+                    <td>{{emplo.email}}</td>
+
+                    <td><input type="hidden" ng-model="emplo.id" /></td>
+                    <td><button class="btn btn-danger" ng-click="deleteRow($index)" /> Delete</td>
+                    <td><button class="btn btn-warning" ng-click="selectRow($index)" />Update</td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="employeePopup" tabindex="-1" role="dialog">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Yeni Üye Ekleme</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Surname</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" class="form-control" ng-model="employee.name" ng-required="true" /></td>
+                                <td><input type="text" class="form-control" ng-model="employee.surname" ng-required="true" /></td>
+                                <td><input type="text" class="form-control" ng-model="employee.email" ng-required="true" /></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <fieldset>
+                    <legend></legend>
+                    <div class="modal-footer">
+                        <input type="hidden" ng-model="emplo.id" />
+                        <input type="button" class="btn btn-danger" value="Cancel" ng-click="cancelForm()" />
+                        <input type="button" class="btn btn-success" value="Save" ng-click="addNew()" />
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>*@
+</div>
+
+@* /------ ng-swipe-left or right----/ *@
+<div>
+    @*<br />
+        <div class="mySwipe" ng-swipe-right="sayi=sayi+1" ng-swipe-left="sayi=sayi-1">
+            Mouse ile sağa sola  hareket ettirme
+            <img ng-src="https://www.encodedna.com/images/theme/easy-image-resizer.jpg" ng-show="sayi==0" />
+            <img ng-src="https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/img.jpg" ng-show="sayi==1" />
+            <img ng-src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEY01l3DMb7BBVhtViaWE0g1pqoW-6wVKmabNiF4b59kAg6voz" ng-show="sayi==2" />
+        </div>
+
+        <button ng-click="sayi=sayi+1">Resim değiştir</button>{{sayi}}*@
+</div>
+
+@* /------ $compile ------/ *@
+<div id="divv">
+    @*<div id="myDiv" class="myClass">
+         Lorem ipsum deneme text yazısı öylesine yazılmıştır, okunacak bir bilgi yoktur.
+         Lorem ipsum deneme text yazısı öylesine yazılmıştır, okunacak bir bilgi yoktur.
+         Lorem ipsum deneme text yazısı öylesine yazılmıştır, okunacak bir bilgi yoktur.
+         Lorem ipsum deneme text yazısı öylesine yazılmıştır, okunacak bir bilgi yoktur.
+        </div>*@
+</div>
+
+
+@* /------- ng-view, Route -----/ *@
+<div>
+    @*<a href="~/Views/Home/About.cshtml"> About</a> ||
+        <a href="~/Views/Home/Contact.cshtml"> Contact</a>
+        <h2>Merhaba Burası index</h2>*@
+</div>
+
+@* /------ image Galery-----/ *@
+<div class="general">
+    @*<div class="resimler">
+            <img special ng-src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlGIhs16b9e-4liJQW8eOJU7QiB9JrUaH0a5SkCK-WHIMnxYwgCw" width="255" height="159" alt="" />
+
+            <img special ng-src="http://mohammad-eimanpour.ir/wp-content/uploads/2018/06/2000px-Linkedin.svg_-250x250.png" />
+            <img special ng-src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlYtgOVYd6vSZQ3JGi3eda44HFKdtUUhJTe83fp8IPKXIF2aJv" />
+            <img special ng-src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEczX2rJCxToGcmgEgOQLIrfuOC_heff4DhOQ-Ba4Rti3V3tE03Q" />
+        </div>
+        <div class="orta">
+            <img ng-src="{{image}}" />
+        </div>*@
+</div>
+
+@* /----- Directive --------/ *@
+<div>
+    @*<br />
+        <p> Bu element için</p>
+        <myDirective></myDirective>
+        <hr /><br />
+
+        <p> Bu class için</p>
+        <div class="myDirective"></div>
+        <hr /><br />
+
+        <p> Bu da attribute için</p>
+        <div myDirective></div>
+        <hr /><br />
+
+        <p> Bu da başka bir durum </p>
+        <div myDirective></div>*@
+</div>
+
+@* /-------$digest-
+    // $scope un değerini günceller
+    ---------/ *@
+<div>
+    @*<br />
+        <button id="btn"> Ekle</button>
+        {{value}}*@
+</div>
+
+
+@* /-----$rootScope---------/ *@
+<div>
+    @*<div ng-controller="myController">
+            <br />
+            <div>
+                {{value}}
+            </div>
+
+        </div>
+        <br />
+        <hr />
+
+        <div ng-controller="myController2">
+            <br />
+            {{myValue}}
+            <div>
+                Benim controller 2 içeriği
+            </div>
+        </div>*@
+</div>
+
+@* /------ng-option--------/ *@
+<div>
+    @*<br />
+        <select ng-change="action(control)" ng-model="control" ng-options="il as il for il in iller">
+        </select>
+        <div>{{control}}</div>*@
+</div>
+
+
+@* /-------Password Confirm---------/ *@
+<div>
+    @*<br />
+        <input type="text" ng-model="box1" placeholder="passsword" /><br />
+        <input type="text" ng-model="box2" placeholder="passsword Confirm" />
+        <div ng-show="box1!=box2 && box2 && box1" style="color:red;height:20px;width:150px;background:#ce2dc0"> Şifreler uyuşmuyor</div><br />
+        <button id="disabled" ng-disabled="box1!=box2 || !box1 || !box2">Confirm</button>*@
+</div>
+
+
+@* /-------ng-keyup, Animation -----/ *@
+<div>
+
+    @*<br />
+        <input type="text" ng-model="box" ng-keyup="$event.keyCode==13 ? action():null"/> <br />
+        <input type="text" ng-model="search" />
+        <br />
+        <h2> Kişiler</h2>
+        <hr />
+        <ul>
+            <li ng-repeat="item in items | Filter:search"><button id="del" ng-click="delete($index)"> Sil</button>{{item}}</li>
+        </ul>*@
+
+</div>
+
+
+@* /-----ng-hide----------/ *@
+<div>
+    @*<br />
+        <button ng-click="hideOrShow()">Hide / Show</button>
+        <br />
+        <img class="image" ng-hide="value" src="https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/img.jpg" />*@
+</div>
+
+@* /-----ng-disabled------/ *@
+<div>
+    @*<br />
+        <input ng-keyup="btn=false" type="text" ng-model="mytext"/>
+        <button ng-click="addText(mytext)" ng-disabled="btn || mytext.length==0" class="deneme"> Add </button>*@
+</div>
+
+
+@* /----- ng-vaid, ng-invalid ,ng-submit-----/ *@
+
+<div>
+    @*<br />
+        <form name="myForm" ng-submit="sendMessage()">
+            <input class="kutu" ng-model="numara" type="number" placeholder="enter the number"/><br />
+            <input class="kutu" ng-model="mail" type="email" placeholder="enter the email" /><br />
+            <button> Send Message</button>
+        </form>*@
+</div>
+
+@* /-------Filter-----/ *@
+<div>
+    <br />
+    @*<button ng-click="value=value+1">Değer Arrtır</button> {{value}} <button ng-click="value=value-1">Değer Azalt</button> <br />
+        <button ng-click="filterData(value)"> To Filter</button>
+        <ul>
+            <li ng-repeat="employee in employees"> <label>{{employee}}</label></li>
+        </ul>*@
+    @*<button ng-click="selectAll()">Select All</button> <button ng-click="unSelectAll()">Unselect All</button>
+        <button ng-click="changeState()">Delete</button>
+         <hr />
+        <div>
+            <ul>
+                <li ng-repeat="person in employees"> <input type="checkbox" ng-model="person.status" /> <label>{{person}}</label></li>
+            </ul>
+        </div>
+
+        <div ng-show="employees.length==0" ng-style="{'color':'red'}">
+            <h2>Gösterilecek herhangi bir veri yok</h2>
+        </div>
+        <hr />
+        <br />
+        <div ng-show="items.length > 0">
+            <h2>Deleted Personal</h2>
+            <hr />
+            <ul>
+                <li ng-repeat="item in items"> {{item.name}} {{item.age}}</li>
+            </ul>
+        </div>*@
+
+
+</div>
+
+@* /-----watch--------/ *@
+<div>
+    @*<br />
+        <label id="emojiUp">☝</label> <button ng-click="value=value+1">increase</button> {{value}}
+        <button ng-click="value=value-1">decrease</button><label id="emojiDown">👇</label>
+        <br /> {{warning}}*@
+</div>
+
+
+@* /checkbox/ *@
+<div>
+    @*<br />
+        <input type="checkbox" ng-model="control" /> <label> Kontrol Et</label><br />
+        <div ng-class="{'alan':control}">Bu bir deneme yazısıdır.</div>*@
+</div>
+
+@* / ng-include/ *@
+<div>
+    @*<button ng-click="page='page1.html'">page1</button> <button ng-click="page='page2.html'">page2</button>*@
+
+    @*<div class="col-md-12">
+            <div class="col-md-6" ng-include="'page1.html'">
+            </div>
+        </div>*@
+</div>
+
+@* ------Create Dynamic Form----- *@
+<div id="deneme">
+    @*<br />
+        <label>Name: <input type="text" /></label>
+        <label> Surname:<input type="text" /></label>
+        <label> Age:<input type="text" /></label>
+        <button class="btn btn-success" ng-click="addNewDiv($count)"> Ekle </button> <button ng-show="deger!=0" class="btn btn-danger" ng-click="deleteDiv()"> Sil </button>*@
+</div>
+
+
+@* /----Image Src, $sce ----/ *@
+<div>
+    @*<br />
+        <button ng-click="getHtmlTag()"> Html Oluştur</button>
+        <div  ng-bind-html="data"></div><br />
+        <div class="video">
+            <img ng-src="{{imageUrl}}" />
+        </div>*@
+
+
+</div>
+
+@* /--------Index-------/ *@
+<div>
+    @*<ul>
+            <li ng-repeat="tool in tools"><button ng-click="deleteTool($index)">sil</button> {{tool}}</li>
+        </ul>*@
+</div>
+
+@* / --------style ------/ *@
+
+@*/ ng-style , ng-show, ng-hide /*@
+<div>
+
+    @*<div ng-show="deger1==5" class="deneme red">
+            Bu Bir Denemedir
+        </div>
+        <div ng-show="deger" class="deneme">
+            Bu Bir Denemedir
+        </div>
+        <br />
+
+        <div >
+            <button ng-click="deger1=deger1+1"> Deger Arttır</button> <label> + </label> {{deger1}} <label> - </label>
+            <button ng-click="deger1=deger1-1"> Deger  Azalt </button>
+        </div>
+        <br />
+        <div>
+            <button ng-click="deger=true">Göster</button>
+            <button ng-click="deger=false"> Gizle </button>
+        </div>*@
+
+</div>
+
+@* /ng-repeat, fiter: search, orderBy/ *@
+<div>
+    @*<br /> <br />
+        <label> Search </label> <input type="text" ng-model="search" />
+        <br />
+        <fieldset>
+            <legend> Users </legend>
+        </fieldset>
+
+        <ul >
+            <li ng-repeat="user in users | filter: search | orderBy:'id'">
+                <label> Id :</label>{{user.id}}
+                <label> Name :</label>{{user.name}}
+                <label> Age : </label>{{user.age}}
+            </li>
+        </ul>*@
+
+</div>
+
+
+@* /--- Directive , Route ---/ *@
+<script>
+         //************* Directive ***********
+    //myApp.directive("myDirective",  function () {
+    //    return {
+    //        restrict:'C', //A :attribute , C:class, E:elemment
+    //        template: '<div class="newDiv">Deneme bir directive </div>',
+    //        link: function ($scope, $element, $attrs) {
+    //            //alert("deneme");
+    //        }
+    //    }
+    //});
+
+
+    // ********** $rootScope ************
+
+    //myApp.controller("myController2", myController2);
+
+    //myController2.$inject = ['$scope', '$rootScope'];
+
+    //function myController2($scope, $rootScope) {
+    //    $scope.myValue = $rootScope.value;
+
+    //};
+
+
+    //***********image Gallery*************
+    //myApp.directive("special", function () {
+    //    return {
+    //        link: function ($scope, $element, $attr) {
+    //            $element.on("click", function () {
+    //                $scope.image = $attr.ngSrc;
+    //                $scope.$digest();
+    //                $element.css({ "border": "2 px blue" });
+    //            });
+    //        }
+    //    }
+    //});
+
+     //************Route************
+    //    myApp.config( function ($routeProvider) {
+    //        $routeProvider.when("/", { templateUrl: "/Home/Index.cshtml" })
+    //            .when("/About", { templateUrl: "~/View/Home/About.cshtml" })
+    //            .when("/Contact", { templateUrl: "~/View/Home/Contact.cshtml" });
+    //});
+</script>
